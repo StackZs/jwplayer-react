@@ -1,20 +1,39 @@
-var path = require('path');
+const path = require("path");
 
 module.exports = {
-    mode: 'production',
-    entry: './src/jwplayer.jsx',
-    output: {
-        path: path.resolve('lib'),
-        filename: 'jwplayer-react.js',
-        libraryTarget: 'commonjs2'
+  entry: "./src/jwplayer.jsx",
+  output: {
+    path: path.resolve(__dirname, "lib"),
+    filename: "jwplayer-react.js",
+    library: "JWPlayerReact",
+    libraryTarget: "umd",
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+    ],
+  },
+  externals: {
+    react: {
+      commonjs: "react",
+      commonjs2: "react",
+      amd: "react",
+      root: "React",
     },
-    module: {
-        rules: [
-            {
-                test: /\.jsx?$/,
-                exclude: /(node_modules)/,
-                use: 'babel-loader'
-            }
-        ]
-    }
-}
+    "react-dom": {
+      commonjs: "react-dom",
+      commonjs2: "react-dom",
+      amd: "react-dom",
+      root: "ReactDOM",
+    },
+  },
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
+};
