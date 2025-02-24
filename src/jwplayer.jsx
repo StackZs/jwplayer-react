@@ -1,10 +1,11 @@
-import React from 'react';
+import React from "react";
+import { ALL, ON_REGEX, ONCE_REGEX } from "./const";
 import {
-  ALL, ON_REGEX, ONCE_REGEX,
-} from './const';
-import {
-  generateConfig, generateUniqueId, loadPlayer, getHandlerName,
-} from './util';
+  generateConfig,
+  generateUniqueId,
+  loadPlayer,
+  getHandlerName,
+} from "./util";
 
 function createOnEventHandler(props) {
   return (name, optReturn) => {
@@ -19,6 +20,9 @@ function createOnEventHandler(props) {
     });
   };
 }
+
+const isBrowser = typeof window !== "undefined";
+
 class JWPlayer extends React.Component {
   constructor(props) {
     super(props);
@@ -33,6 +37,7 @@ class JWPlayer extends React.Component {
   }
 
   async componentDidMount() {
+    if (!isBrowser) return;
     await loadPlayer(this.library);
     this.player = this.createPlayer();
     this.createEventListeners();
@@ -44,6 +49,8 @@ class JWPlayer extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    if (!isBrowser) return false;
+
     if (!this.player) {
       return false;
     }
@@ -86,8 +93,10 @@ class JWPlayer extends React.Component {
       return true;
     }
 
-    const newEvents = nextEvents.some((event, index) => currEvents[index] !== event
-      || nextProps[event] !== this.props[event]);
+    const newEvents = nextEvents.some(
+      (event, index) =>
+        currEvents[index] !== event || nextProps[event] !== this.props[event]
+    );
 
     return newEvents;
   }
