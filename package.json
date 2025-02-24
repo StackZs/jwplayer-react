@@ -1,5 +1,5 @@
 {
-  "name": "@jwplayer/jwplayer-react",
+  "name": "@stackzs/jwplayer-react",
   "version": "1.1.4",
   "description": "A react component that creates an instance of JW Player",
   "license": "MIT",
