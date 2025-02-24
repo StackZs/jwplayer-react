@@ -64,6 +64,7 @@ class JWPlayer extends React.Component {
   }
 
   componentWillUnmount() {
+    if (!isBrowser) return;
     if (this.willUnmountCallback) {
       const { player, id } = this;
       this.willUnmountCallback({ player, id });
